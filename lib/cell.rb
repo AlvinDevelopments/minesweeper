@@ -5,13 +5,13 @@ class Cell
   def initialize(mine)
     @mine = false
     @number = 0
-    @visibility = true
+    @visibility = false
   end
 
   def to_s
-    return "O" if !opened?
-    return @number if !@mine && @number != 0
-    return " " if !@mine && @number == 0
+    return " " if !opened?
+    return @number if !@mine #&& @number != 0
+    # return " " if !@mine && @number == 0
     return 'X'
   end
 
@@ -21,6 +21,10 @@ class Cell
 
   def mine?
     return @mine
+  end
+
+  def open
+    @visibility = true
   end
 
 

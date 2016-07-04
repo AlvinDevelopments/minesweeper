@@ -6,5 +6,6 @@ describe Game do
       expect(subject).to be_a(Game)
     end
 
+
   end
 end

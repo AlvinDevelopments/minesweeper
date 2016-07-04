@@ -10,6 +10,7 @@ class Board
     @board = Array.new(rows){Array.new(cols)}
     @rows = rows
     @cols = cols
+    @mine_count = mines
 
     # assigns each box of the board with a mineless, unopened cell
     @board.each do |x|
@@ -65,15 +66,12 @@ class Board
 
   # TODO make full implementation later
   def open_cell(row, col)
-    safe = true
     if row >= @rows || row < 0 || col >= @cols  || col < 0
       puts "invalid input, please try again"
-      safe = true
     end
 
     if(@board[row][col].opened?)
       puts "already opened"
-      safe = true
     end
 
     if(@board[row][col].mine?)
@@ -85,17 +83,24 @@ class Board
       return false
     end
 
-
-
-
    @board[row][col].open
-   return safe
+   return true
+  end
 
+  def flag_cell(row, col)
+    @board[row][col].flag
   end
 
 
    def win?
-     #TODO
+     @board.each do |x|
+       x.each do |y|
+         if y.mine? && !y.opened? && !y.flag?
+           return false
+         end
+       end
+     end
+     return true
    end
 
 end

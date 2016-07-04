@@ -10,15 +10,21 @@ class Game
 
     while(!@victory)
       @board.render
-      puts "Make yo move row!!!"
-      row = gets.chomp
-      puts "Make yo move row!!!"
-      col = gets.chomp
-      if !@board.open_cell(row.to_i, col.to_i)
-        @board.render
-        puts "GAME OVER!!"
-        return
+      puts "ENTER INPUT IN THE FOLLOWING FORMAT: --R C F-- USE  F in the end for flag "
+      inputs = gets.chomp.split(' ')
+
+      if inputs[2] != "F" && inputs[2] != "f"
+        if !@board.open_cell(inputs[0].to_i, inputs[1].to_i)
+          @board.render
+          puts "GAME OVER!!"
+          return
+        end
+      else
+        @board.flag_cell(inputs[0].to_i, inputs[1].to_i)
       end
+    if win?
+      break
+    end
 
     end
     @board.render

@@ -1,16 +1,20 @@
 require_relative 'board'
-
+require 'colorize'
 class Game
 
-  def initialize
-    @board = Board.new(9,9,10)
+  def initialize(rows, cols, mines)
+    @board = Board.new(rows,cols,mines)
   end
 
   def start_game
 
     while(!@victory)
       @board.render
-      puts "ENTER INPUT IN THE FOLLOWING FORMAT: --R C F-- USE  F in the end for flag "
+      puts "ENTER INPUT IN THE FOLLOWING FORMAT:\n"
+      print "row column f ".colorize(:green)
+      print "OR "
+      print "row column\n".colorize(:green)
+      puts "Put f to flag space instead of opening."
       inputs = gets.chomp.split(' ')
 
       if inputs[2] != "F" && inputs[2] != "f"
@@ -22,16 +26,15 @@ class Game
       else
         @board.flag_cell(inputs[0].to_i, inputs[1].to_i)
       end
-    if win?
-      break
-    end
-
+      if @board.win?
+         @board.show_all
+        break
+      end
     end
     @board.render
-    puts "u win bitch"
   end
 
 end
 
-game = Game.new
+game = Game.new(5,5,3)
 game.start_game
